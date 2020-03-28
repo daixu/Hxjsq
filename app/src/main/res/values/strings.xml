@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">跑胡子计算器</string>
+    <string name="error_prompt_1">&#160;&#160;&#160;&#160;单局不会存在两人以上胡息&gt;0，请重新输入~</string>
+    <string name="error_prompt_2">&#160;&#160;单局不会存在两人以上胡息&lt;0，请重新输入~</string>
+
+    <string name="app_exit_prompt">再按一次退出程序</string>
+    <string name="prompt_user_name_empty">用户名称不能为空</string>
+    <string name="prompt_user_name_exist">用户名称不能重复</string>
+    <string name="prompt_score_error">请输入其他玩家的胡息数</string>
+    <string name="prompt_save_success">记录保存成功~</string>
+    <string name="input_game_magnification">请输入游戏倍率</string>
+    <string name="input_score">请输入胡息</string>
+    <string name="prompt_score_small">累计胡息未满100，是否结束本轮？</string>
+</resources>

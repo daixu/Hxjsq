@@ -1,0 +1,76 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/ui_loading</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="CustomDialogStyle" parent="android:style/Theme.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="MajorTextViewStyle" parent="android:style/Widget.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- 主要TextView的字体风格 -->
+    <style name="NormalTextViewStyle" parent="android:style/Widget.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="CustomDialogTitleTextStyle" parent="NormalTextViewStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="CustomDialogMsgTextStyle" parent="NormalTextViewStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="CustomDialogButtonStyle" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/img_confirm_btn</item>
+        <item name="android:outlineProvider" tools:targetApi="lollipop">none</item>
+        <item name="android:elevation" tools:targetApi="lollipop">0dp</item>
+        <!--<item name="android:padding">@dimen/button_min_padding</item>-->
+    </style>
+
+    <style name="CustomDialogCancelButtonStyle" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:background">@drawable/img_clear_btn</item>
+        <item name="android:outlineProvider" tools:targetApi="lollipop">none</item>
+        <item name="android:elevation" tools:targetApi="lollipop">0dp</item>
+        <!--<item name="android:padding">@dimen/button_min_padding</item>-->
+    </style>
+
+    <style name="AutoCompleteStyle" parent="@android:style/Widget.AutoCompleteTextView">
+        <item name="android:popupBackground">@drawable/bg_main_name_popup</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+    </style>
+</resources>
