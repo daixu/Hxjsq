@@ -396,7 +396,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_clear1" />
+                    android:src="@drawable/btn_clear_selector" />
 
                 <ImageView
                     android:id="@+id/img_query_record"
@@ -405,7 +405,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_view_history1"
+                    android:src="@drawable/btn_history_selector"
                     android:visibility="gone" />
 
                 <ImageView
@@ -432,7 +432,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_next1" />
+                    android:src="@drawable/btn_next_selector" />
 
                 <ImageView
                     android:id="@+id/img_end_game"
@@ -441,7 +441,7 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_end_game1"
+                    android:src="@drawable/btn_end_game_selector"
                     android:visibility="gone" />
 
                 <ImageView
