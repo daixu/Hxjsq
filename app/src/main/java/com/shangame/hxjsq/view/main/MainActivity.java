@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dao = App.getInstance().getSession().getResultEntityDao();
         recordEntityDao = App.getInstance().getSession().getScoreRecordEntityDao();
 
+        recordEntityDao.deleteAll();
+
         initView();
         initListener();
     }
@@ -356,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             break;
             case R.id.img_clear: {
                 clearView();
+                recordEntityDao.deleteAll();
             }
             break;
             case R.id.img_next_game: {
@@ -384,20 +387,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void endGame() {
-        String magnification = mEditMagnification.getText().toString();
-        if (TextUtils.isEmpty(magnification)) {
-            dialogPromptInput(getString(R.string.input_game_magnification));
-            return;
+        String value1 = mEditBureau1.getText().toString();
+        String value2 = mEditBureau2.getText().toString();
+        String value3 = mEditBureau3.getText().toString();
+
+        BigDecimal accumulative1;
+        BigDecimal accumulative2;
+        BigDecimal accumulative3;
+        if (!TextUtils.isEmpty(value1)) {
+            BigDecimal bureau1 = new BigDecimal(value1);
+            accumulative1 = mAccumulative1.add(bureau1);
+        } else {
+            accumulative1 = mAccumulative1;
         }
-        BigDecimal magnifi = new BigDecimal(magnification);
-        BigDecimal score1 = mAccumulative1.multiply(new BigDecimal(2)).subtract(mAccumulative2.add(mAccumulative3)).multiply(magnifi);
-        BigDecimal score2 = mAccumulative2.multiply(new BigDecimal(2)).subtract(mAccumulative1.add(mAccumulative3)).multiply(magnifi);
-        BigDecimal score3 = mAccumulative3.multiply(new BigDecimal(2)).subtract(mAccumulative1.add(mAccumulative2)).multiply(magnifi);
+        if (!TextUtils.isEmpty(value2)) {
+            BigDecimal bureau2 = new BigDecimal(value2);
+            accumulative2 = mAccumulative2.add(bureau2);
+        } else {
+            accumulative2 = mAccumulative2;
+        }
+        if (!TextUtils.isEmpty(value3)) {
+            BigDecimal bureau3 = new BigDecimal(value3);
+            accumulative3 = mAccumulative3.add(bureau3);
+        } else {
+            accumulative3 = mAccumulative3;
+        }
 
         BigDecimal bigDecimal = new BigDecimal(100);
-        int result1 = score1.compareTo(bigDecimal);
-        int result2 = score2.compareTo(bigDecimal);
-        int result3 = score3.compareTo(bigDecimal);
+        int result1 = accumulative1.compareTo(bigDecimal);
+        int result2 = accumulative2.compareTo(bigDecimal);
+        int result3 = accumulative3.compareTo(bigDecimal);
 
         if (result1 < 0 && result2 < 0 && result3 < 0) {
             dialogScore(getString(R.string.prompt_score_small));
@@ -616,7 +635,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mEditBureau1.requestFocus();
 
         mImgClear.setVisibility(View.VISIBLE);
+        mImgEndGame.setVisibility(View.VISIBLE);
+        mImgQueryRecord.setVisibility(View.VISIBLE);
         mImgNextGame.setVisibility(View.VISIBLE);
+
+        mImgCancel.setVisibility(View.GONE);
+        mImgConfirm.setVisibility(View.GONE);
 
         mAccumulative1 = mAccumulative1.subtract(mBureau1);
         mAccumulative2 = mAccumulative2.subtract(mBureau2);
