@@ -1,5 +1,8 @@
 package com.shangame.hxjsq.adapter;
 
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -19,9 +22,35 @@ public class ScoreRecordAdapter extends BaseQuickAdapter<ScoreRecordEntity, Base
     @Override
     protected void convert(BaseViewHolder helper, ScoreRecordEntity dataBean) {
         helper.setText(R.id.text_number, "第" + dataBean.getNumber() + "局");
-        helper.setText(R.id.text_name_1, dataBean.getName());
-        helper.setText(R.id.text_name_2, dataBean.getName2());
-        helper.setText(R.id.text_name_3, dataBean.getName3());
+        TextView textName1 = helper.getView(R.id.text_name_1);
+        TextView textName2 = helper.getView(R.id.text_name_2);
+        TextView textName3 = helper.getView(R.id.text_name_3);
+        ImageView imgName = helper.getView(R.id.img_name);
+        if (TextUtils.isEmpty(dataBean.getName())) {
+            textName1.setVisibility(View.GONE);
+        } else {
+            textName1.setVisibility(View.VISIBLE);
+        }
+        if (TextUtils.isEmpty(dataBean.getName2())) {
+            textName2.setVisibility(View.GONE);
+        } else {
+            textName2.setVisibility(View.VISIBLE);
+        }
+        if (TextUtils.isEmpty(dataBean.getName3())) {
+            textName3.setVisibility(View.GONE);
+        } else {
+            textName3.setVisibility(View.VISIBLE);
+        }
+
+        if (TextUtils.isEmpty(dataBean.getName()) || TextUtils.isEmpty(dataBean.getName2()) || TextUtils.isEmpty(dataBean.getName3())) {
+            imgName.setVisibility(View.GONE);
+        } else {
+            imgName.setVisibility(View.VISIBLE);
+        }
+
+        textName1.setText(dataBean.getName());
+        textName2.setText(dataBean.getName2());
+        textName3.setText(dataBean.getName3());
 
         TextView textScore1 = helper.getView(R.id.text_score_1);
         TextView textScore2 = helper.getView(R.id.text_score_2);

@@ -233,7 +233,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onShowKeyboard() {
-                        checkName();
+                        boolean isShowName = RxSPTool.getBoolean(MainActivity.this, SHOW_NAME, true);
+                        if (isShowName) {
+                            checkName();
+                        }
                     }
 
                     @Override
@@ -245,7 +248,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .bindEditTextCallBack(mEditBureau2, new KeyboardViewManager.onSureClickListener() {
                     @Override
                     public void onShowKeyboard() {
-                        checkName();
+                        boolean isShowName = RxSPTool.getBoolean(MainActivity.this, SHOW_NAME, true);
+                        if (isShowName) {
+                            checkName();
+                        }
                     }
 
                     @Override
@@ -257,7 +263,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .bindEditTextCallBack(mEditBureau3, new KeyboardViewManager.onSureClickListener() {
                     @Override
                     public void onShowKeyboard() {
-                        checkName();
+                        boolean isShowName = RxSPTool.getBoolean(MainActivity.this, SHOW_NAME, true);
+                        if (isShowName) {
+                            checkName();
+                        }
                     }
 
                     @Override
@@ -563,12 +572,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String name2 = mEditName2.getText().toString();
         String name3 = mEditName3.getText().toString();
 
-        if (TextUtils.isEmpty(name1) || TextUtils.isEmpty(name2) || TextUtils.isEmpty(name3)) {
+        boolean isShowName = RxSPTool.getBoolean(this, SHOW_NAME, true);
+        if (isShowName && (TextUtils.isEmpty(name1) || TextUtils.isEmpty(name2) || TextUtils.isEmpty(name3))) {
             dialogPromptInput(getString(R.string.prompt_user_name_empty));
             return;
         }
 
-        if (name1.equals(name2) || name1.equals(name3) || name2.equals(name3)) {
+        if (isShowName && (name1.equals(name2) || name1.equals(name3) || name2.equals(name3))) {
             dialogPromptInput(getString(R.string.prompt_user_name_exist));
             return;
         }
@@ -584,46 +594,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double dValue1 = 0;
         double dValue2 = 0;
         double dValue3 = 0;
-        if (!TextUtils.isEmpty(value1)) {
-            dValue1 = Double.valueOf(value1);
-        }
-        if (!TextUtils.isEmpty(value2)) {
-            dValue2 = Double.valueOf(value2);
-        }
-        if (!TextUtils.isEmpty(value3)) {
-            dValue3 = Double.valueOf(value3);
-        }
-        if ((dValue1 > 0 && dValue2 > 0) || (dValue1 > 0 && dValue3 > 0) || (dValue2 > 0 && dValue3 > 0)) {
-            dialogPrompt(getString(R.string.error_prompt_1));
-            return;
+        try {
+            if (!TextUtils.isEmpty(value1)) {
+                dValue1 = Double.valueOf(value1);
+            }
+            if (!TextUtils.isEmpty(value2)) {
+                dValue2 = Double.valueOf(value2);
+            }
+            if (!TextUtils.isEmpty(value3)) {
+                dValue3 = Double.valueOf(value3);
+            }
+
+            if ((dValue1 > 0 && dValue2 > 0) || (dValue1 > 0 && dValue3 > 0) || (dValue2 > 0 && dValue3 > 0)) {
+                dialogPrompt(getString(R.string.error_prompt_1));
+                return;
+            }
+
+            if (dValue1 < 0 && dValue2 < 0 && dValue3 < 0) {
+                dialogPrompt(getString(R.string.error_prompt_2));
+                return;
+            }
+            saveRecord(value1, value2, value3);
+            saveScoreRecord(name1, name2, name3, dValue1, dValue2, dValue3);
+            if (mNumber < 99) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("第");
+                stringBuilder.append("\n");
+                stringBuilder.append(++mNumber);
+                stringBuilder.append("\n");
+                stringBuilder.append("局");
+                mTextNumber.setText(stringBuilder);
+            } else {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("第");
+                stringBuilder.append("\n");
+                stringBuilder.append("99+");
+                stringBuilder.append("\n");
+                stringBuilder.append("局");
+                mTextNumber.setText(stringBuilder);
+            }
+
+            mImgQueryRecord.setVisibility(View.VISIBLE);
+            mImgEndGame.setVisibility(View.VISIBLE);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            dialogPrompt(getString(R.string.error_score));
         }
 
-        if (dValue1 < 0 && dValue2 < 0 && dValue3 < 0) {
-            dialogPrompt(getString(R.string.error_prompt_2));
-            return;
-        }
-        saveRecord(value1, value2, value3);
-        saveScoreRecord(name1, name2, name3, dValue1, dValue2, dValue3);
-        if (mNumber < 99) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("第");
-            stringBuilder.append("\n");
-            stringBuilder.append(++mNumber);
-            stringBuilder.append("\n");
-            stringBuilder.append("局");
-            mTextNumber.setText(stringBuilder);
-        } else {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("第");
-            stringBuilder.append("\n");
-            stringBuilder.append("99+");
-            stringBuilder.append("\n");
-            stringBuilder.append("局");
-            mTextNumber.setText(stringBuilder);
-        }
-
-        mImgQueryRecord.setVisibility(View.VISIBLE);
-        mImgEndGame.setVisibility(View.VISIBLE);
     }
 
     private void cancelOption() {
@@ -691,27 +708,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String name2 = mEditName2.getText().toString();
         String name3 = mEditName3.getText().toString();
 
-        if (TextUtils.isEmpty(name1) || TextUtils.isEmpty(name2) || TextUtils.isEmpty(name3)) {
+        boolean isShowName = RxSPTool.getBoolean(this, SHOW_NAME, true);
+        if (isShowName && (TextUtils.isEmpty(name1) || TextUtils.isEmpty(name2) || TextUtils.isEmpty(name3))) {
             dialogPromptInput(getString(R.string.prompt_user_name_empty));
             return;
         }
 
-        if (name1.equals(name2) || name1.equals(name3) || name2.equals(name3)) {
+        if (isShowName && (name1.equals(name2) || name1.equals(name3) || name2.equals(name3))) {
             dialogPromptInput(getString(R.string.prompt_user_name_exist));
             return;
         }
 
-        entity.setName(name1);
+        if (isShowName) {
+            entity.setName(name1);
+            entity.setName2(name2);
+            entity.setName3(name3);
+        }
+
         entity.setDuplicate(1);
         entity.setAccumulative(mAccumulative1.doubleValue());
         entity.setScore(mScore1.doubleValue());
 
-        entity.setName2(name2);
         entity.setDuplicate2(1);
         entity.setAccumulative2(mAccumulative2.doubleValue());
         entity.setScore2(mScore2.doubleValue());
 
-        entity.setName3(name3);
         entity.setDuplicate3(1);
         entity.setAccumulative3(mAccumulative3.doubleValue());
         entity.setScore3(mScore3.doubleValue());
@@ -803,22 +824,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double dValue1 = 0;
         double dValue2 = 0;
         double dValue3 = 0;
-        if (!TextUtils.isEmpty(value1)) {
-            dValue1 = Double.valueOf(value1);
-        }
-        if (!TextUtils.isEmpty(value2)) {
-            dValue2 = Double.valueOf(value2);
-        }
-        if (!TextUtils.isEmpty(value3)) {
-            dValue3 = Double.valueOf(value3);
-        }
-        if ((dValue1 > 0 && dValue2 > 0) || (dValue1 > 0 && dValue3 > 0) || (dValue2 > 0 && dValue3 > 0)) {
-            dialogPrompt(getString(R.string.error_prompt_1));
-            return false;
-        }
+        try {
+            if (!TextUtils.isEmpty(value1)) {
+                dValue1 = Double.valueOf(value1);
+            }
+            if (!TextUtils.isEmpty(value2)) {
+                dValue2 = Double.valueOf(value2);
+            }
+            if (!TextUtils.isEmpty(value3)) {
+                dValue3 = Double.valueOf(value3);
+            }
 
-        if (dValue1 < 0 && dValue2 < 0 && dValue3 < 0) {
-            dialogPrompt(getString(R.string.error_prompt_2));
+            if ((dValue1 > 0 && dValue2 > 0) || (dValue1 > 0 && dValue3 > 0) || (dValue2 > 0 && dValue3 > 0)) {
+                dialogPrompt(getString(R.string.error_prompt_1));
+                return false;
+            }
+
+            if (dValue1 < 0 && dValue2 < 0 && dValue3 < 0) {
+                dialogPrompt(getString(R.string.error_prompt_2));
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            dialogPrompt(getString(R.string.error_score));
             return false;
         }
 
@@ -980,9 +1008,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void saveScoreRecord(String name1, String name2, String name3, double value1, double value2, double value3) {
         ScoreRecordEntity entity = new ScoreRecordEntity();
-        entity.setName(name1);
-        entity.setName2(name2);
-        entity.setName3(name3);
+        boolean isShowName = RxSPTool.getBoolean(this, SHOW_NAME, true);
+
+        if (isShowName) {
+            entity.setName(name1);
+            entity.setName2(name2);
+            entity.setName3(name3);
+        }
 
         entity.setScore(value1);
         entity.setScore2(value2);

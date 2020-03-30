@@ -11,4 +11,5 @@
     <string name="input_game_magnification">请输入游戏倍率</string>
     <string name="input_score">请输入胡息</string>
     <string name="prompt_score_small">累计胡息未满100，是否结束本轮？</string>
+    <string name="error_score">请输入正确的胡息数</string>
 </resources>
