@@ -25,10 +25,6 @@ public class SystemSoftKeyUtils {
                 setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
                 setShowSoftInputOnFocus.setAccessible(true);
                 setShowSoftInputOnFocus.invoke(editText, false);
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -42,7 +38,9 @@ public class SystemSoftKeyUtils {
      */
     public static void showSoftInput(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        if (null != imm) {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     /**
@@ -50,7 +48,9 @@ public class SystemSoftKeyUtils {
      */
     public static void showSoftInput(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view, 0);
+        if (null != imm) {
+            imm.showSoftInput(view, 0);
+        }
     }
 
     /**
@@ -58,6 +58,8 @@ public class SystemSoftKeyUtils {
      */
     public static void hideSoftInput(Context context, View view) {
         InputMethodManager immHide = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        immHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (null != immHide) {
+            immHide.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

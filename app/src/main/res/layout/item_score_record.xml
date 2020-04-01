@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -19,7 +20,46 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:textColor="#3A3A3A"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            tools:ignore="RtlHardcoded">
+
+            <ImageView
+                android:id="@+id/img_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/img_score_modify" />
+
+            <ImageView
+                android:id="@+id/img_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/img_score_cancel"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:src="@drawable/img_score_confirm"
+                android:visibility="gone" />
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -87,7 +127,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_record_item2"
                 android:gravity="center"
+                android:hint="@string/input_score"
                 android:text="得分1"
+                android:textColor="#333333"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -97,7 +140,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_record_item1"
                 android:gravity="center"
+                android:hint="@string/input_score"
                 android:text="得分2"
+                android:textColor="#333333"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -107,7 +153,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_record_item2"
                 android:gravity="center"
+                android:hint="@string/input_score"
                 android:text="得分3"
+                android:textColor="#333333"
+                android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.record.ScoreRecordActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/layout_title"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/image_title" />
+                android:src="@drawable/img_score_record" />
 
             <ImageView
                 android:id="@+id/img_setting"
@@ -53,17 +53,6 @@
                 android:src="@drawable/icon_setting"
                 tools:ignore="RtlHardcoded" />
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/app_name"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_score_record" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

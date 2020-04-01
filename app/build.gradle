@@ -114,4 +114,5 @@ dependencies {
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
 
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'com.lxj:xpopup:1.8.12'
 }

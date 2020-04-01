@@ -4,9 +4,15 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-@Entity
-public class ScoreRecordEntity {
+import java.io.Serializable;
 
+/**
+ * @author Speedy
+ */
+@Entity
+public class ScoreRecordEntity implements Serializable {
+
+    private static final long serialVersionUID = 6284502284560723490L;
     @Id(autoincrement = true)
     private Long id;
     private String name; // 名称

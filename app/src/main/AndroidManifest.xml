@@ -14,8 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.record.ScoreRecordActivity"></activity>
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+
+        <activity
+            android:name=".view.record.ModifyRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TransparentTheme" />
+
+        <activity
+            android:name=".view.record.ScoreRecordActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="android.max_aspect"

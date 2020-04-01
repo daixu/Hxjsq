@@ -17,6 +17,8 @@ import java.util.List;
 public class ScoreRecordAdapter extends BaseQuickAdapter<ScoreRecordEntity, BaseViewHolder> {
     public ScoreRecordAdapter(int layoutResId, List<ScoreRecordEntity> data) {
         super(layoutResId, data);
+
+        addChildClickViewIds(R.id.img_modify);
     }
 
     @Override

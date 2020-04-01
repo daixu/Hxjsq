@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/image_title" />
+                android:src="@drawable/image_record" />
 
             <ImageView
                 android:id="@+id/img_del"
@@ -53,17 +53,6 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/image_del" />
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/app_name"
-            android:gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_record" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

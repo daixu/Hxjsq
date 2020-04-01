@@ -346,6 +346,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             mLayoutName.setVisibility(View.GONE);
         }
+
+        List<ScoreRecordEntity> list = recordEntityDao.loadAll();
+        if (null != list && !list.isEmpty()) {
+            double dScore1 = 0;
+            double dScore2 = 0;
+            double dScore3 = 0;
+            for (ScoreRecordEntity entity : list) {
+                dScore1 += entity.getScore();
+                dScore2 += entity.getScore2();
+                dScore3 += entity.getScore3();
+            }
+
+            mAccumulative1 = new BigDecimal(dScore1);
+            mAccumulative2 = new BigDecimal(dScore2);
+            mAccumulative3 = new BigDecimal(dScore3);
+
+            mTextAccumulative1.setText(checkPoint(mAccumulative1 + ""));
+            mTextAccumulative2.setText(checkPoint(mAccumulative2 + ""));
+            mTextAccumulative3.setText(checkPoint(mAccumulative3 + ""));
+        }
     }
 
     @Override
