@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.enums.PopupAnimation;
 import com.shangame.hxjsq.R;
 import com.shangame.hxjsq.adapter.ScoreRecordAdapter;
 import com.shangame.hxjsq.app.App;
@@ -26,7 +24,6 @@ import com.shangame.hxjsq.storage.model.ScoreRecordEntity;
 import com.shangame.hxjsq.utils.StatusBarUtil;
 import com.shangame.hxjsq.view.setting.SettingActivity;
 import com.shangame.hxjsq.widget.CustomDialog;
-import com.shangame.hxjsq.widget.ModifyRecordPopupWindow;
 import com.shangame.hxjsq.widget.keyboard.SystemSoftKeyUtils;
 
 import java.util.List;
@@ -37,7 +34,6 @@ import timber.log.Timber;
  * 小局记录
  */
 public class ScoreRecordActivity extends AppCompatActivity implements View.OnClickListener {
-    private ModifyRecordPopupWindow mPopupWindow;
     private List<ScoreRecordEntity> mList;
     private ScoreRecordEntityDao dao;
     private CustomDialog mDialog;
@@ -93,45 +89,6 @@ public class ScoreRecordActivity extends AppCompatActivity implements View.OnCli
         bundle.putSerializable("entity", entity);
         intent.putExtras(bundle);
         startActivityForResult(intent, 101);
-    }
-
-    private void modifyPopupWindow(final ScoreRecordEntity entity) {
-        mPopupWindow = new ModifyRecordPopupWindow(ScoreRecordActivity.this, entity);
-
-        new XPopup.Builder(ScoreRecordActivity.this)
-                .popupAnimation(PopupAnimation.ScaleAlphaFromCenter)
-                // .autoOpenSoftInput(true)
-                .asCustom(mPopupWindow)
-                .show();
-
-        mPopupWindow.setCancelListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPopupWindow.dismiss();
-            }
-        });
-
-        mPopupWindow.setSaveClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String score1 = mPopupWindow.getScore1();
-                String score2 = mPopupWindow.getScore2();
-                String score3 = mPopupWindow.getScore3();
-                if (check(score1, score2, score3)) {
-                    double dScore1 = Double.valueOf(score1);
-                    double dScore2 = Double.valueOf(score2);
-                    double dScore3 = Double.valueOf(score3);
-                    entity.setScore(dScore1);
-                    entity.setScore2(dScore2);
-                    entity.setScore3(dScore3);
-                    dao.update(entity);
-                    mList = dao.loadAll();
-                    mAdapter.setNewData(mList);
-                    mAdapter.notifyDataSetChanged();
-                    mPopupWindow.dismiss();
-                }
-            }
-        });
     }
 
     private boolean check(String value1, String value2, String value3) {
@@ -202,11 +159,6 @@ public class ScoreRecordActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != mPopupWindow) {
-            mPopupWindow.dismiss();
-            mPopupWindow = null;
-        }
-
         if (null != mDialog) {
             mDialog.dismiss();
             mDialog = null;
