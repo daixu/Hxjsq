@@ -72,7 +72,6 @@ public class ScoreRecordActivity extends AppCompatActivity implements View.OnCli
                         ScoreRecordEntity entity = mList.get(position);
                         Timber.e("modify");
                         modify(entity);
-                        // modifyPopupWindow(entity);
                     }
                 }
             }

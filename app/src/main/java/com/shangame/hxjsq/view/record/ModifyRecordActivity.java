@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,7 +18,7 @@ import com.shangame.hxjsq.storage.model.ScoreRecordEntity;
 import com.shangame.hxjsq.utils.StatusBarUtil;
 import com.shangame.hxjsq.widget.CustomDialog;
 import com.shangame.hxjsq.widget.DecimalInputTextWatcher;
-import com.shangame.hxjsq.widget.keyboard.KeyboardViewManager;
+import com.shangame.hxjsq.widget.keyboard.KeyboardViewModifyManager;
 
 import timber.log.Timber;
 
@@ -25,10 +27,9 @@ public class ModifyRecordActivity extends AppCompatActivity {
     private EditText mEditScore1;
     private EditText mEditScore2;
     private EditText mEditScore3;
-    private ScoreRecordEntity mEntity;
     private CustomDialog mDialog;
     private FrameLayout rootView;
-    private KeyboardViewManager manager;
+    private KeyboardViewModifyManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,35 +38,38 @@ public class ModifyRecordActivity extends AppCompatActivity {
         StatusBarUtil.setTranslucentForImageView(this, 0, null);
 
         Intent intent = getIntent();
-        mEntity = (ScoreRecordEntity) intent.getSerializableExtra("entity");
+        ScoreRecordEntity entity = (ScoreRecordEntity) intent.getSerializableExtra("entity");
 
         rootView = findViewById(R.id.rootView);
         mEditScore1 = findViewById(R.id.edit_score_1);
         mEditScore2 = findViewById(R.id.edit_score_2);
         mEditScore3 = findViewById(R.id.edit_score_3);
 
+        TextView textTitle = findViewById(R.id.text_title);
+
         mEditScore1.addTextChangedListener(new DecimalInputTextWatcher(4, 1, this));
         mEditScore2.addTextChangedListener(new DecimalInputTextWatcher(4, 1, this));
         mEditScore3.addTextChangedListener(new DecimalInputTextWatcher(4, 1, this));
 
-        if (null != mEntity) {
-            mEditScore1.setText(checkPoint(mEntity.getScore() + ""));
-            mEditScore2.setText(checkPoint(mEntity.getScore2() + ""));
-            mEditScore3.setText(checkPoint(mEntity.getScore3() + ""));
+        if (null != entity) {
+            textTitle.setText(getString(R.string.modify_number_record, entity.getNumber()));
+            mEditScore1.setText(checkPoint(entity.getScore() + ""));
+            mEditScore2.setText(checkPoint(entity.getScore2() + ""));
+            mEditScore3.setText(checkPoint(entity.getScore3() + ""));
 
-            if (mEntity.getScore() > 0) {
+            if (entity.getScore() > 0) {
                 mEditScore1.setTextColor(ContextCompat.getColor(this, R.color.numberBlack));
             } else {
                 mEditScore1.setTextColor(ContextCompat.getColor(this, R.color.numberRed));
             }
 
-            if (mEntity.getScore2() > 0) {
+            if (entity.getScore2() > 0) {
                 mEditScore2.setTextColor(ContextCompat.getColor(this, R.color.numberBlack));
             } else {
                 mEditScore2.setTextColor(ContextCompat.getColor(this, R.color.numberRed));
             }
 
-            if (mEntity.getScore3() > 0) {
+            if (entity.getScore3() > 0) {
                 mEditScore3.setTextColor(ContextCompat.getColor(this, R.color.numberBlack));
             } else {
                 mEditScore3.setTextColor(ContextCompat.getColor(this, R.color.numberRed));
@@ -77,10 +81,10 @@ public class ModifyRecordActivity extends AppCompatActivity {
     }
 
     private void initManager() {
-        manager = KeyboardViewManager
+        manager = KeyboardViewModifyManager
                 .builder()
                 .bindEditText(mEditScore1, mEditScore2, mEditScore3)
-                .bindEditTextCallBack(mEditScore1, new KeyboardViewManager.onSureClickListener() {
+                .bindEditTextCallBack(mEditScore1, new KeyboardViewModifyManager.onSureClickListener() {
 
                     @Override
                     public void onShowKeyboard() {
@@ -89,9 +93,11 @@ public class ModifyRecordActivity extends AppCompatActivity {
 
                     @Override
                     public void onSureClick() {
+                        mEditScore1.clearFocus();
+                        mEditScore2.requestFocus();
                     }
                 })
-                .bindEditTextCallBack(mEditScore2, new KeyboardViewManager.onSureClickListener() {
+                .bindEditTextCallBack(mEditScore2, new KeyboardViewModifyManager.onSureClickListener() {
                     @Override
                     public void onShowKeyboard() {
 
@@ -99,9 +105,11 @@ public class ModifyRecordActivity extends AppCompatActivity {
 
                     @Override
                     public void onSureClick() {
+                        mEditScore2.clearFocus();
+                        mEditScore3.requestFocus();
                     }
                 })
-                .bindEditTextCallBack(mEditScore3, new KeyboardViewManager.onSureClickListener() {
+                .bindEditTextCallBack(mEditScore3, new KeyboardViewModifyManager.onSureClickListener() {
                     @Override
                     public void onShowKeyboard() {
                     }
@@ -214,7 +222,6 @@ public class ModifyRecordActivity extends AppCompatActivity {
     }
 
     private void dialogPrompt(String content) {
-        // SystemSoftKeyUtils.hideSoftInput(this, rootView);
         mDialog = new CustomDialog.Builder(this)
                 .setMessage(content)
                 .setNegativeButton(R.drawable.img_confirm, new DialogInterface.OnClickListener() {
@@ -224,5 +231,15 @@ public class ModifyRecordActivity extends AppCompatActivity {
                     }
                 }).create();
         mDialog.show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (null != manager && manager.isShow()) {
+                manager.hideSoftKeyboard();
+            }
+        }
+        return false;
     }
 }
