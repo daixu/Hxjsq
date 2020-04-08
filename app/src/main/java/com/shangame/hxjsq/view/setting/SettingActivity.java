@@ -5,8 +5,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shangame.hxjsq.BuildConfig;
 import com.shangame.hxjsq.R;
 import com.shangame.hxjsq.utils.RxSPTool;
 import com.shangame.hxjsq.utils.StatusBarUtil;
@@ -46,6 +48,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         switchButton.setChecked(isShowName);
 
         switchButton.setOnCheckedChangeListener(this);
+
+        TextView textChannel = findViewById(R.id.text_channel);
+        int channel = BuildConfig.CHANNEL_ID;
+        String strChannel = "channel: " + channel;
+        textChannel.setText(strChannel);
     }
 
     private void copy(String copyStr) {

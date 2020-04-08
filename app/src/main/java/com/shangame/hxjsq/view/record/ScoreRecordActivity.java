@@ -51,7 +51,7 @@ public class ScoreRecordActivity extends AppCompatActivity implements View.OnCli
         dao = App.getInstance().getSession().getScoreRecordEntityDao();
 
         RecyclerView recyclerRecord = findViewById(R.id.recycler_record);
-        mList = dao.loadAll();
+        mList = dao.queryBuilder().orderDesc(ScoreRecordEntityDao.Properties.Number).list();
 
         mAdapter = new ScoreRecordAdapter(R.layout.item_score_record, mList);
         recyclerRecord.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -182,7 +182,7 @@ public class ScoreRecordActivity extends AppCompatActivity implements View.OnCli
                         mEntity.setScore2(dScore2);
                         mEntity.setScore3(dScore3);
                         dao.update(mEntity);
-                        mList = dao.loadAll();
+                        mList = dao.queryBuilder().orderDesc(ScoreRecordEntityDao.Properties.Number).list();
                         mAdapter.setNewData(mList);
                         mAdapter.notifyDataSetChanged();
                     }
